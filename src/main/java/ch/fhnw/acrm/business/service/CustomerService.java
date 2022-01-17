@@ -24,20 +24,20 @@ public class CustomerService {
 	private AgentService agentService;
 
 	public Customer editCustomer(@Valid Customer customer) throws Exception {
-		if (customer.getId() == null) {
-			if (customerRepository.findByMobile(customer.getMobile()) == null) {
+		if (customer.getMail() == null) {
+			if (customerRepository.findByMobile(customer.getNumber()) == null) {
 				customer.setAgent(agentService.getCurrentAgent());
 				return customerRepository.save(customer);
 			}
-			throw new Exception("Mobile number " + customer.getMobile() + " already assigned to a customer.");
+			throw new Exception("Mobile number " + customer.getNumber() + " already assigned to a customer.");
 		}
-		if (customerRepository.findByMobileAndIdNot(customer.getMobile(), customer.getId()) == null) {
+		if (customerRepository.findByMobileAndIdNot(customer.getNumber(), customer.getMail()) == null) {
 			if (customer.getAgent() == null) {
 				customer.setAgent(agentService.getCurrentAgent());
 			}
 			return customerRepository.save(customer);
 		}
-		throw new Exception("Mobile number " + customer.getMobile() + " already assigned to a customer.");
+		throw new Exception("Mobile number " + customer.getNumber() + " already assigned to a customer.");
 	}
 
 	public void deleteCustomer(Long customerId)

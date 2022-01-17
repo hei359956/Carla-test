@@ -1,3 +1,5 @@
+//customer modify
+
 function postCustomer(customer, callbackSuccess, callbackError) {
     $.ajax({
         type: "POST",

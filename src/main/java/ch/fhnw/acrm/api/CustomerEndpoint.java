@@ -3,6 +3,8 @@
  * All rights reserved.
  */
 
+
+// modify for customer
 package ch.fhnw.acrm.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +38,7 @@ public class CustomerEndpoint {
 
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest().path("/{customerId}")
-                .buildAndExpand(customer.getId()).toUri();
+                .buildAndExpand(customer.getMail()).toUri();
 
         return ResponseEntity.created(location).body(customer);
     }
@@ -60,7 +62,7 @@ public class CustomerEndpoint {
     @PutMapping(path = "/customer/{customerId}", consumes = "application/json", produces = "application/json")
     public ResponseEntity<Customer> putCustomer(@RequestBody Customer customer, @PathVariable(value = "customerId") String customerId) {
         try {
-            customer.setId(Long.parseLong(customerId));
+            customer.setMail(Long.parseLong(customerId));
             customer = customerService.editCustomer(customer);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, e.getMessage());
